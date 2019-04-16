@@ -25,17 +25,9 @@ path=os.path.join(cur_dir,
 path=Path(path)
 
  def setup_learner():
-    try:
-        learn = load_learner(path, export_file_name)
-        return learn
-    except RuntimeError as e:
-        if len(e.args) > 0 and 'CPU-only machine' in e.args[0]:
-            print(e)
-            message = "\n\nThis model was trained with an old version of fastai and will not work in a CPU environment.\n\nPlease update the fastai library in your training environment and export your model again.\n\nSee instructions for 'Returning to work' at https://course.fast.ai."
-            raise RuntimeError(message)
-        else:
-            raise
-
+    learn=load_learner(path, export_file_name)
+    return learn
+    
 
 
 ######## Preparing the Classifier
