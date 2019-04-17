@@ -24,18 +24,16 @@ path=os.path.join(cur_dir,
                  'export.pkl')
 path=Path(path)
 
- def setup_learner():
-    learn=load_learner(path, export_file_name)
-    return learn
+learn=load_learner(path, export_file_name)
+   
     
 
 
 ######## Preparing the Classifier
 
 
-async def analyze(document):
-    learn=setup_learner()
-    prediction = learn.predict(document)
+def analyze(document,learn):
+    prediction=learn.predict(document)
     p=prediction[1]
     p=p.item()
     prob=prediction[2][p].item()
@@ -57,7 +55,7 @@ def results():
     form = ReviewForm(request.form)
     if request.method == 'POST' and form.validate():
         review = request.form['moviereview']
-        y, proba = analyze(review)
+        y, proba = analyze(review,learn)
         return render_template('results.html',
                                 content=review,
                                 prediction=y,
